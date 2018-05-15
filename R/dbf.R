@@ -48,11 +48,11 @@ write.dbf <- function(dataframe, file, factor2char = TRUE, max_nchar = 254)
                          "factor", "Date")
 
     if (!is.data.frame(dataframe)) dataframe <- as.data.frame(dataframe)
-    if (any(sapply(dataframe, function(x) !is.null(dim(x)))))
+    if (any(vapply(dataframe, function(x) !is.null(dim(x)), NA)))
         stop("cannot handle matrix/array columns")
-    cl <- sapply(dataframe, function(x) class(x[1L]))
+    cl <- vapply(dataframe, function(x) class(x[1L]), "")
     asis <- cl == "AsIs"
-    cl[asis & sapply(dataframe, mode) == "character"] <- "character"
+    cl[asis & vapply(dataframe, mode, '') == "character"] <- "character"
     if(length(cl0 <- setdiff(cl, allowed_classes)))
         stop(sprintf(ngettext(length(cl0),
                               "data frame contains columns of unsupported class %s",
