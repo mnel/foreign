@@ -119,9 +119,10 @@ function(file)
             data <- gsub("\\(", "", data)
             data <- gsub("\\)", "", data)
             nums <- strsplit(data, ",")
-            stopifnot(all(sapply(nums, length) == 2))
-            array(complex(real = as.numeric(sapply(nums, "[", 1L)),
-                          imaginary = as.numeric(sapply(nums, "[", 2L))),
+            # note could replace with lengths if bumping R-version dependancy
+            stopifnot(all(vapply(nums, length, 1L) == 2L))
+            array(complex(real = as.numeric(vapply(nums, "[", "", 1L)),
+                          imaginary = as.numeric(vapply(nums, "[", "",2L))),
                   dim = dims)
         }
     }

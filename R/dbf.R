@@ -102,8 +102,8 @@ write.dbf <- function(dataframe, file, factor2char = TRUE, max_nchar = 254)
             scale[i] <- 0L
         } else stop("unknown column type in data frame")
     }
-    if (any(is.na(precision))) stop("NA in precision") # added RSB 2005-04-17
-    if (any(is.na(scale))) stop("NA in scale") # added RSB 2005-04-17
+    if (anyNA(precision)) stop("NA in precision") # added RSB 2005-04-17
+    if (anyNA(scale)) stop("NA in scale") # added RSB 2005-04-17
     invisible( .Call(DoWritedbf, as.character(file),
                      dataframe, as.integer(precision), as.integer(scale),
                      as.character(DataTypes)))
